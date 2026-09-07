@@ -1,0 +1,219 @@
+[
+    {
+        "id": "1dfbf7e0-a864-4120-90ac-af4cbba72f96",
+        "job_title": "Python developer",
+        "company_name": "ABC Technologies",
+        "experience": "Fresher",
+        "work_mode": "Remote",
+        "required_skills": [
+            "Python",
+            "Flask",
+            "SQL",
+            "Git",
+            "REST API"
+        ],
+        "job_description": "Develop and maintain Python applications, build REST APIs using Flask, work with SQL databases, use Git for version control, and collaborate with the development team.",
+        "location": "Bhopal",
+        "education": "B.tech",
+        "company_details": {
+            "company_name": "ABC Technologies",
+            "industry": "Technology",
+            "location": "Bhopal",
+            "description": "ABC Technologies is hiring for Python developer.",
+            "work_mode": "Remote",
+            "benefits": [
+                "Professional Growth",
+                "Collaborative Environment",
+                "Learning Opportunities"
+            ]
+        },
+        "candidates": [
+            {
+                "candidate_id": "c1ac4c62-da1b-497d-987d-fddad3d91ed0",
+                "filename": "Priyanka_Sankhediya_Resume_ATS_2.docx",
+                "name": "Priyanka Sankhediya",
+                "email": "priyankasankhediya07@gmail.com",
+                "phone": "+91-8602086569",
+                "skills": [
+                    "Python",
+                    "Java",
+                    "C",
+                    "Javascript",
+                    "Go",
+                    "Html",
+                    "Css",
+                    "Flask",
+                    "Sql",
+                    "Data Science",
+                    "Pandas",
+                    "Numpy",
+                    "Scikit-Learn",
+                    "Nlp",
+                    "Git",
+                    "Github",
+                    "Ui/Ux",
+                    "Figma",
+                    "Canva",
+                    "Power Bi",
+                    "Excel",
+                    "Marketing",
+                    "Finance",
+                    "Hr"
+                ],
+                "domain": "Software Development",
+                "experience": 0,
+                "education": [
+                    "B.Tech"
+                ],
+                "match_score": 72,
+                "matched_skills": [
+                    "Python",
+                    "Flask",
+                    "SQL",
+                    "Git"
+                ],
+                "missing_skills": [
+                    "REST API"
+                ],
+                "status": "Screened",
+                "resume_file": "9606d08f1cff454198ff76206e9f34a7_Priyanka_Sankhediya_Resume_ATS_2.docx",
+                "screened_at": "2026-08-30 13:48:29"
+            },
+            {
+                "candidate_id": "eaf83c97-c0d3-4e63-9d43-0bb831f54940",
+                "filename": "M-_Jatin_Jadhav_CV.pdf",
+                "name": "Jatin Jadhav",
+                "email": "jatinjadhav673@gmail.com",
+                "phone": "8269781828",
+                "skills": [
+                    "C",
+                    "Go",
+                    "Excel",
+                    "Marketing",
+                    "Sales",
+                    "Finance",
+                    "Accounting",
+                    "Banking",
+                    "Hr",
+                    "Communication"
+                ],
+                "domain": "Finance",
+                "experience": 0,
+                "education": [
+                    "MBA"
+                ],
+                "match_score": 16,
+                "matched_skills": [],
+                "missing_skills": [
+                    "Python",
+                    "Flask",
+                    "SQL",
+                    "Git",
+                    "REST API"
+                ],
+                "status": "Screened",
+                "resume_file": "89dae0af3dfc4374b818c1884797af31_M-_Jatin_Jadhav_CV.pdf",
+                "screened_at": "2026-08-30 13:48:29"
+            },
+            {
+                "candidate_id": "a716a62f-fadf-4cba-ab9f-97ab037aa947",
+                "filename": "RESUME_ASHUTOSH_BAJPAI-1.docx",
+                "name": "Ashutosh Bajpai",
+                "email": "ashutosh.na1996@gmail.com",
+                "phone": "+91-8887624605",
+                "skills": [
+                    "C",
+                    "Go",
+                    "Excel",
+                    "Marketing",
+                    "Sales",
+                    "Hr",
+                    "Leadership"
+                ],
+                "domain": "Marketing",
+                "experience": 0,
+                "education": [],
+                "match_score": 15,
+                "matched_skills": [],
+                "missing_skills": [
+                    "Python",
+                    "Flask",
+                    "SQL",
+                    "Git",
+                    "REST API"
+                ],
+                "status": "Screened",
+                "resume_file": "e83408535ef74865824d0b42a3dd4c2e_RESUME_ASHUTOSH_BAJPAI-1.docx",
+                "screened_at": "2026-08-30 13:48:28"
+            },
+            {
+                "candidate_id": "ba11a220-0086-4df5-90a2-3e4e0a34b705",
+                "filename": "Vikram_OL.pdf",
+                "name": "Drinx Ventures Private Limited",
+                "email": "info@drinx.co.in",
+                "phone": "9111910299",
+                "skills": [
+                    "C",
+                    "Go",
+                    "Aws",
+                    "Marketing",
+                    "Sales",
+                    "Hr"
+                ],
+                "domain": "Marketing",
+                "experience": 0,
+                "education": [],
+                "match_score": 15,
+                "matched_skills": [],
+                "missing_skills": [
+                    "Python",
+                    "Flask",
+                    "SQL",
+                    "Git",
+                    "REST API"
+                ],
+                "status": "Screened",
+                "resume_file": "f4d4b4a06e924d929c5c55c6cf38fda4_Vikram_OL.pdf",
+                "screened_at": "2026-08-30 13:48:29"
+            },
+            {
+                "candidate_id": "ecc60f15-3dbc-47b7-a8cb-7d21ab77d91b",
+                "filename": "123Deepak.docx",
+                "name": "Deepak Yadav",
+                "email": "-d132103@gmail.com",
+                "phone": "8013001515",
+                "skills": [
+                    "C",
+                    "Go",
+                    "Marketing",
+                    "Sales",
+                    "Hr"
+                ],
+                "domain": "Marketing",
+                "experience": 0,
+                "education": [],
+                "match_score": 13,
+                "matched_skills": [],
+                "missing_skills": [
+                    "Python",
+                    "Flask",
+                    "SQL",
+                    "Git",
+                    "REST API"
+                ],
+                "status": "Screened",
+                "resume_file": "5b3c89987f24451580afa1a8652d4725_123Deepak.docx",
+                "screened_at": "2026-08-30 13:48:28"
+            }
+        ],
+        "shortlisted": [
+            "c1ac4c62-da1b-497d-987d-fddad3d91ed0",
+            "eaf83c97-c0d3-4e63-9d43-0bb831f54940",
+            "a716a62f-fadf-4cba-ab9f-97ab037aa947",
+            "ba11a220-0086-4df5-90a2-3e4e0a34b705",
+            "ecc60f15-3dbc-47b7-a8cb-7d21ab77d91b"
+        ],
+        "interviews": [],
+        "created_at": "2026-08-28 21:55:37"
+    }
+]

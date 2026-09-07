@@ -1,125 +1,556 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Resume Analyzer</title>
+
+    <title>Resume Screening | AI Resume Screening & Skills Gap Analysis</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
-<body><div class="analyzer-box"><button id="themeBtn" onclick="toggleTheme()">
-    🌙 Dark Mode
-</button>
 
-<a href="index.html" class="back-btn">🏠 Home</a>
+<body>
 
-<h1>AI Resume Analyzer</h1>
+<!-- ================= NAVBAR ================= -->
 
-<p class="subtitle">
-    Get ATS Score, Skill Analysis and AI-Powered Resume Suggestions
-</p>
+<nav class="navbar">
 
-<p>Upload your resume and get instant feedback.</p>
-
-<div class="upload-box">
-
-    <label for="resumeFile">
-        📄 Drop Resume Here or Click to Upload
-    </label>
-
-    <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" style="display:none;">
-
-    <button onclick="analyzeResume()" class="hero-btn">
-        Analyze Resume
-    </button>
-
-    <div id="previewName">No file selected</div>
-
-    <div class="progress-container">
-        <div id="progressBar"></div>
+    <div class="logo">
+        <span class="logo-red">AI</span>
+        RESUME
+        <small>SCREENING</small>
     </div>
 
-    <div id="loading" style="display:none;">
-        ⏳ Analyzing Resume...
+    <ul class="nav-links">
+
+        <li>
+            <a href="index.html">Home</a>
+        </li>
+
+        <li>
+            <a href="analyzer.html">Resume Screening</a>
+        </li>
+
+        <li>
+            <a href="recruiter.html">Recruiter</a>
+        </li>
+
+        <li>
+            <a href="index.html#features">Features</a>
+        </li>
+
+        <li>
+            <a href="index.html#faq">FAQ</a>
+        </li>
+
+    </ul>
+
+    <a href="recruiter.html" class="nav-btn">
+        Recruiter Portal
+    </a>
+
+</nav>
+
+
+<!-- ================= ANALYZER ================= -->
+
+<main class="analyzer-box">
+
+    <a href="index.html" class="back-btn">
+        ← Back to Home
+    </a>
+
+
+    <div class="hero-badge">
+        ✦ AI-POWERED RESUME SCREENING
     </div>
 
-    <div id="result"></div>
 
-    <div id="strength"></div>
+    <h1>
+        KNOW YOUR
+        <span style="color:#e50914;">RESUME.</span>
+    </h1>
 
-    <div class="analyzer-stats">
-        <span>⭐ 95% ATS Accuracy</span>
-        <span>⚡ Results in Seconds</span>
-        <span>🔒 Secure Upload</span>
-    </div>
 
-    <div class="mini-features">
+    <p class="subtitle">
+        AI Resume Screening & Skills Gap Analysis
+    </p>
 
-        <div class="score-card">
-            <h2>ATS Score</h2>
-            <div class="circle-score">
-                <span id="circleScore">0%</span>
+
+    <p>
+        Upload your resume and discover your ATS score,
+        skills, domain, missing skills and improvement areas.
+    </p>
+
+
+    <!-- ================= UPLOAD ================= -->
+
+    <div class="upload-box">
+
+        <label for="resumeFile">
+
+            <div style="font-size:50px; margin-bottom:15px;">
+                📄
             </div>
+
+            <strong>
+                Drop Your Resume Here
+            </strong>
+
+            <br>
+
+            <span style="color:#888; font-size:13px;">
+                or click to browse
+            </span>
+
+            <br><br>
+
+            <span style="color:#777; font-size:12px;">
+                Supported formats: PDF, DOCX
+            </span>
+
+        </label>
+
+
+        <input
+            type="file"
+            id="resumeFile"
+            accept=".pdf,.doc,.docx"
+            style="display:none;"
+        >
+
+
+        <button
+            onclick="analyzeResume()"
+            class="primary-btn"
+        >
+            ▶ Analyze Resume
+        </button>
+
+
+        <div id="previewName">
+            No file selected
         </div>
 
-        <div class="mini-card">
-            <h3>ATS Score</h3>
-            <p>Check resume compatibility.</p>
+
+        <!-- Progress -->
+
+        <div class="progress-container">
+
+            <div id="progressBar"></div>
+
         </div>
 
-        <div class="mini-card">
-            <h3>Skills & Keywords</h3>
-            <p>Detect skills from any domain.</p>
+
+        <!-- Loading -->
+
+        <div id="loading" style="display:none;">
+            ⏳ Analyzing your resume...
         </div>
 
-        <div class="mini-card">
-            <h3>Resume Recommendations</h3>
-            <p>Get personalized improvement tips.</p>
-        </div>
 
-        <div class="mini-card">
-            <h3>Detected Domain</h3>
-            <p id="domain">Loading...</p>
-        </div>
+        <!-- Result -->
 
-        <div class="mini-card">
-            <h3>Missing Skills</h3>
-            <p id="missingSkills">Loading...</p>
-        </div>
+        <div id="result"></div>
 
-        <div class="mini-card">
-            <h3>Resume Preview</h3>
-            <p id="previewNameCard">No file selected</p>
-        </div>
+        <div id="strength"></div>
 
-        <div class="mini-card">
-            <h3>Detected Skills</h3>
-            <p id="skillsList">Loading...</p>
-        </div>
 
-        <div class="mini-card">
-            <h3>Resume Strength</h3>
-            <p id="strengthText">Loading...</p>
-        </div>
+        <!-- ================= ANALYZER STATS ================= -->
 
-        <div class="mini-card">
-            <h3>Recommendations</h3>
-            <p id="recommendations">Loading...</p>
+        <div class="analyzer-stats">
+
+            <span>
+                ⚡ Instant Analysis
+            </span>
+
+            <span>
+                📄 PDF & DOCX
+            </span>
+
+            <span>
+                🔒 Secure Processing
+            </span>
+
         </div>
 
     </div>
 
-</div>
 
-</div><div class="cta-section">
-    <h2>Ready to Improve Your Resume?</h2>
-    <p>Upload your resume and get professional ATS insights instantly.</p>
-    <a href="analyzer.html" class="hero-btn">Analyze Resume Now</a>
-</div>
-<div style="text-align:center; margin-top:30px;">
-    <button id="downloadBtn" onclick="downloadReport()">
-        📄 Download PDF Report
-    </button>
-</div>
+    <!-- ================= SCORE ================= -->
+
+    <section class="analysis-dashboard">
+
+        <div class="section-heading">
+
+            <span>
+                YOUR ANALYSIS
+            </span>
+
+            <h2>
+                Resume Insights
+            </h2>
+
+        </div>
+
+
+        <div class="mini-features">
+
+
+            <!-- ATS SCORE -->
+
+            <div class="score-card">
+
+                <h2>
+                    ATS SCORE
+                </h2>
+
+                <div class="circle-score">
+
+                    <span id="circleScore">
+                        0%
+                    </span>
+
+                </div>
+
+                <p>
+                    Resume compatibility score
+                </p>
+
+            </div>
+
+
+            <!-- DOMAIN -->
+
+            <div class="mini-card">
+
+                <div class="feature-icon">
+                    🎯
+                </div>
+
+                <h3>
+                    Detected Domain
+                </h3>
+
+                <p id="domain">
+                    Upload a resume to detect your domain.
+                </p>
+
+            </div>
+
+
+            <!-- SKILLS -->
+
+            <div class="mini-card">
+
+                <div class="feature-icon">
+                    🧠
+                </div>
+
+                <h3>
+                    Detected Skills
+                </h3>
+
+                <p id="skillsList">
+                    Skills will appear here after analysis.
+                </p>
+
+            </div>
+
+
+            <!-- MISSING SKILLS -->
+
+            <div class="mini-card">
+
+                <div class="feature-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Skills Gap
+                </h3>
+
+                <p id="missingSkills">
+                    Missing skills will appear here.
+                </p>
+
+            </div>
+
+
+            <!-- STRENGTH -->
+
+            <div class="mini-card">
+
+                <div class="feature-icon">
+                    💪
+                </div>
+
+                <h3>
+                    Resume Strength
+                </h3>
+
+                <p id="strengthText">
+                    Waiting for analysis...
+                </p>
+
+            </div>
+
+
+            <!-- RECOMMENDATIONS -->
+
+            <div class="mini-card">
+
+                <div class="feature-icon">
+                    💡
+                </div>
+
+                <h3>
+                    AI Recommendations
+                </h3>
+
+                <p id="recommendations">
+                    Personalized recommendations will appear here.
+                </p>
+
+            </div>
+
+
+            <!-- FILE -->
+
+            <div class="mini-card">
+
+                <div class="feature-icon">
+                    📁
+                </div>
+
+                <h3>
+                    Resume
+                </h3>
+
+                <p id="previewNameCard">
+                    No file selected
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= SKILL GAP EXPLANATION ================= -->
+
+    <section class="skill-gap-preview">
+
+        <div class="section-heading">
+
+            <span>
+                SKILLS GAP ANALYSIS
+            </span>
+
+            <h2>
+                Understand what you're missing
+            </h2>
+
+        </div>
+
+
+        <div class="gap-grid">
+
+            <div class="gap-card">
+
+                <div class="gap-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <h3>
+                        Existing Skills
+                    </h3>
+
+                    <p>
+                        Skills detected from your resume
+                        are displayed in your analysis.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="gap-card">
+
+                <div class="gap-icon missing">
+                    !
+                </div>
+
+                <div>
+
+                    <h3>
+                        Missing Skills
+                    </h3>
+
+                    <p>
+                        Identify important skills that may
+                        strengthen your profile for your domain.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="gap-card">
+
+                <div class="gap-icon">
+                    ↑
+                </div>
+
+                <div>
+
+                    <h3>
+                        Improve Your Profile
+                    </h3>
+
+                    <p>
+                        Use the recommendations to improve
+                        your resume and career readiness.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= DOWNLOAD ================= -->
+
+    <section class="report-section">
+
+        <div>
+
+            <span>
+                YOUR REPORT
+            </span>
+
+            <h2>
+                Take your resume analysis with you.
+            </h2>
+
+            <p>
+                Generate a PDF report containing your ATS score,
+                detected skills, skill gaps and recommendations.
+            </p>
+
+        </div>
+
+
+        <button
+            id="downloadBtn"
+            onclick="downloadReport()"
+        >
+            📄 Download PDF Report
+        </button>
+
+    </section>
+
+
+</main>
+
+
+<!-- ================= AI ASSISTANT ================= -->
+
+<section class="assistant-section">
+
+    <div class="assistant-card">
+
+        <div class="assistant-icon">
+            🤖
+        </div>
+
+        <div>
+
+            <span>
+                AI ASSISTANT
+            </span>
+
+            <h2>
+                Have a question about your resume?
+            </h2>
+
+            <p>
+                Soon you'll be able to ask questions about
+                your resume, skills, job matching and interviews.
+            </p>
+
+        </div>
+
+        <button class="assistant-btn">
+            Ask AI →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="final-cta">
+
+    <span>
+        READY FOR THE NEXT STEP?
+    </span>
+
+    <h2>
+        FIND YOUR
+        <strong>OPPORTUNITY.</strong>
+    </h2>
+
+    <div>
+
+        <a href="analyzer.html" class="primary-btn">
+            Analyze Again
+        </a>
+
+        <a href="recruiter.html" class="secondary-btn">
+            Recruiter Portal
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
-    <p>© 2026 AI Resume Analyzer | Designed & Developed by Priyanka Sankhediya</p>
-</footer><script src="script.js"></script></body>
-</html>
+
+    <div class="footer-logo">
+
+        <span>AI</span>
+        RESUME SCREENING
+
+    </div>
+
+    <p>
+        AI Resume Screening & Skills Gap Analysis
+    </p>
+
+    <p>
+        © 2026 AI Resume Screening | Designed & Developed by Priyanka Sankhediya
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>     

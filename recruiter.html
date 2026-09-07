@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recruiter Portal | AI Resume Screening</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:#050505;color:#fff;line-height:1.5}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.nav{position:sticky;top:0;z-index:20;height:78px;background:#050505;border-bottom:1px solid #222;display:flex;align-items:center;justify-content:space-between;padding:0 5%}
+.logo{font-weight:900;font-size:25px;line-height:.8;letter-spacing:-1px}
+.logo span{color:#f20d18}
+.logo small{display:block;color:#aaa;font-size:8px;letter-spacing:4px;text-align:center;margin-left:25px;margin-top:6px}
+.navlinks{display:flex;gap:32px;font-weight:700;font-size:14px}
+.navlinks a:hover{color:#f20d18}
+.navbtn{background:#f20d18;padding:14px 24px;border-radius:6px;font-weight:800}
+.hero{min-height:520px;padding:85px 7%;display:flex;align-items:center;background:radial-gradient(circle at 75% 45%,#260306 0,transparent 35%),#050505}
+.badge{display:inline-block;border:1px solid #f20d18;color:#f20d18;padding:9px 15px;border-radius:4px;font-size:12px;font-weight:900;letter-spacing:2px;margin-bottom:28px}
+.hero h1{font-size:76px;line-height:.95;max-width:760px;letter-spacing:-4px}
+.hero h1 span{color:#f20d18}
+.hero p{max-width:720px;color:#ccc;font-size:18px;margin:28px 0}
+.actions{display:flex;gap:14px}
+.btn{border:0;border-radius:5px;padding:14px 24px;font-weight:800}
+.btn.red{background:#f20d18;color:#fff}
+.btn.dark{background:#161616;color:#fff;border:1px solid #555}
+.btn:hover{transform:translateY(-1px)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #292929;border-bottom:1px solid #292929}
+.stat{padding:28px 30px;border-right:1px solid #292929}
+.stat:last-child{border-right:0}
+.stat label{display:block;color:#888;font-size:12px;font-weight:800;letter-spacing:2px;margin-bottom:12px}
+.stat strong{font-size:40px;color:#fff}
+.stat:first-child strong{color:#f20d18}
+.section{padding:75px 7%;background:#090909;border-bottom:1px solid #191919}
+.section.alt{background:#0d0d0d}
+.kicker{color:#f20d18;font-size:12px;font-weight:900;letter-spacing:3px;margin-bottom:12px}
+.section h2{font-size:48px;letter-spacing:-2px;margin-bottom:10px}
+.sub{color:#aaa;margin-bottom:35px}
+.card{background:#111;border:1px solid #2b2b2b;border-radius:10px;padding:28px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.field label{display:block;color:#bbb;font-size:13px;font-weight:700;margin-bottom:7px}
+.field input,.field select,.field textarea{width:100%;background:#070707;color:#fff;border:1px solid #444;border-radius:5px;padding:12px}
+.field textarea{min-height:115px;resize:vertical}
+.full{grid-column:1/-1}
+.form-actions{margin-top:22px;display:flex;gap:12px;align-items:center}
+.msg{padding:11px 14px;border-radius:5px;display:none}
+.msg.ok{display:block;background:#102513;color:#9ef0ad;border:1px solid #285e35}
+.msg.err{display:block;background:#2a0909;color:#ff9d9d;border:1px solid #742525}
+.jobbar{display:flex;gap:12px;align-items:end;flex-wrap:wrap}
+.jobbar .field{min-width:280px;flex:1}
+.job-info{margin-top:20px;padding:16px;background:#080808;border:1px solid #292929;border-radius:7px;color:#ccc}
+.uploadbox{border:2px dashed #444;border-radius:8px;padding:35px;text-align:center;background:#080808}
+.uploadbox:hover{border-color:#f20d18}
+.uploadbox input{display:block;margin:15px auto 0;max-width:100%}
+.results{margin-top:30px}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{text-align:left;padding:14px 12px;border-bottom:1px solid #292929}
+th{font-size:12px;color:#888;letter-spacing:1px;text-transform:uppercase}
+td{color:#ddd}
+.score{font-weight:900;color:#f20d18}
+.tag{display:inline-block;border:1px solid #444;border-radius:20px;padding:3px 8px;margin:2px;font-size:11px;color:#ccc}
+.status{font-size:11px;font-weight:800;border-radius:20px;padding:5px 9px;background:#242424}
+.candidate-card{background:#0a0a0a;border:1px solid #292929;border-radius:8px;padding:18px;margin-bottom:12px}
+.candidate-head{display:flex;justify-content:space-between;gap:15px;align-items:center}
+.candidate-head h3{font-size:20px}
+.muted{color:#888;font-size:13px}
+.candidate-meta{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0;color:#bbb;font-size:13px}
+.analysis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.analysis-box{background:#111;border:1px solid #292929;border-radius:7px;padding:14px}
+.analysis-box h4{font-size:12px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:9px}
+.analysis-box.good h4{color:#71e58a}
+.analysis-box.warn h4{color:#ff9f43}
+.analysis-box.info h4{color:#7eb6ff}
+.analysis-box p{color:#ddd;font-size:13px}
+.skill-progress{height:7px;background:#292929;border-radius:10px;overflow:hidden;margin-top:8px}
+.skill-progress span{display:block;height:100%;background:#f20d18;border-radius:10px}
+.gap-summary{margin-top:12px;padding:12px 14px;background:#160507;border-left:3px solid #f20d18;border-radius:5px;color:#ddd;font-size:13px}
+.recommendation{margin-top:10px;padding:12px 14px;background:#101c12;border:1px solid #285e35;border-radius:5px;color:#a8efb4;font-size:13px}
+.breakdown{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.break-row{font-size:12px;color:#aaa}
+.break-row strong{float:right;color:#fff}
+
+.pill{color:#f20d18;font-weight:900}
+.two{display:grid;grid-template-columns:1.3fr .7fr;gap:20px}
+.assistant{height:420px;display:flex;flex-direction:column}
+.chat{flex:1;overflow:auto;background:#080808;border:1px solid #292929;border-radius:7px;padding:16px}
+.bubble{max-width:85%;padding:10px 13px;border-radius:8px;margin-bottom:10px;white-space:pre-wrap}
+.bot{background:#171717;border:1px solid #2a2a2a}
+.user{background:#f20d18;margin-left:auto}
+.chatform{display:flex;gap:8px;margin-top:10px}
+.chatform input{flex:1;background:#080808;color:#fff;border:1px solid #444;border-radius:5px;padding:12px}
+.interview-list .item{border:1px solid #292929;background:#0a0a0a;border-radius:7px;padding:14px;margin-bottom:10px}
+.footer{padding:35px 7%;background:#050505;color:#777;display:flex;justify-content:space-between;gap:20px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:50;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}
+.modalbox{width:min(620px,100%);background:#111;border:1px solid #444;border-radius:10px;padding:25px}
+.close{float:right;background:none;border:0;color:#fff;font-size:25px}
+.empty{padding:30px;text-align:center;color:#777;border:1px dashed #333;border-radius:8px}
+@media(max-width:900px){
+.navlinks{display:none}.hero h1{font-size:52px}.stats{grid-template-columns:repeat(2,1fr)}
+.grid,.two,.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.hero{padding:65px 6%}.analysis-grid,.breakdown{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo"><span>AI</span> RESUME<small>SCREENING</small></div>
+  <div class="navlinks">
+    <a href="#home">Home</a>
+    <a href="#screening">Candidate Analyzer</a>
+    <a href="#screening">Screening</a>
+    <a href="#top5">Top 5</a>
+    <a href="#assistant">AI Assistant</a>
+  </div>
+  <a class="navbtn" href="#create-job">Recruiter Workspace</a>
+</nav>
+
+<section class="hero" id="home">
+  <div>
+    <div class="badge">✦ AI RECRUITER WORKSPACE</div>
+    <h1>FIND YOUR<br><span>BEST TALENT.</span></h1>
+    <p>AI-powered resume screening, skill-gap analysis and intelligent candidate ranking — built to help recruiters find the right talent faster.</p>
+    <div class="actions">
+      <button class="btn red" onclick="document.getElementById('create-job').scrollIntoView()">+ Create Job</button>
+      <button class="btn dark" onclick="document.getElementById('screening').scrollIntoView()">View Screening</button>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat"><label>ACTIVE JOBS</label><strong id="statJobs">0</strong></div>
+  <div class="stat"><label>TOTAL RESUMES</label><strong id="statResumes">0</strong></div>
+  <div class="stat"><label>SHORTLISTED</label><strong id="statShortlisted">0</strong></div>
+  <div class="stat"><label>INTERVIEWS</label><strong id="statInterviews">0</strong></div>
+</section>
+
+<section class="section" id="create-job">
+  <div class="kicker">STEP 01</div>
+  <h2>Create a Job Opening</h2>
+  <p class="sub">Define the role and the skills the AI should use for candidate matching.</p>
+  <div class="card">
+    <form id="jobForm">
+      <div class="formgrid">
+        <div class="field"><label>Job Title *</label><input id="jobTitle" placeholder="e.g. Python Developer" required></div>
+        <div class="field"><label>Company Name *</label><input id="companyName" placeholder="e.g. ABC Technologies" required></div>
+        <div class="field"><label>Minimum Experience</label>
+          <select id="experience">
+            <option>Fresher</option><option>0 - 2 Years</option><option>2 - 5 Years</option><option>5+ Years</option>
+          </select>
+        </div>
+        <div class="field"><label>Work Mode</label>
+          <select id="workMode"><option>Remote</option><option>Hybrid</option><option>On-site</option></select>
+        </div>
+        <div class="field full"><label>Required Skills * (comma separated)</label><input id="requiredSkills" placeholder="Python, Flask, SQL, Git, REST API" required></div>
+        <div class="field full"><label>Job Description</label><textarea id="jobDescription" placeholder="Describe the role, responsibilities and requirements..."></textarea></div>
+        <div class="field"><label>Location</label><input id="location" placeholder="Bhopal / Remote"></div>
+        <div class="field"><label>Education</label><input id="education" placeholder="B.Tech / BCA / MCA"></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn red" type="submit">+ Create Job Opening</button>
+        <span id="jobMsg" class="msg"></span>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="section alt" id="screening">
+  <div class="kicker">STEP 02</div>
+  <h2>Upload Candidate Resumes</h2>
+  <p class="sub">Upload PDF, DOC or DOCX resumes. The backend extracts skills, experience and job-match scores.</p>
+
+  <div class="card">
+    <div class="jobbar">
+      <div class="field">
+        <label>Select Job</label>
+        <select id="jobSelect"><option value="">Loading jobs...</option></select>
+      </div>
+      <button class="btn dark" onclick="loadJobs()">↻ Refresh Jobs</button>
+    </div>
+    <div id="jobInfo" class="job-info">Create a job first, then select it here.</div>
+
+    <form id="screenForm" style="margin-top:20px">
+      <div class="uploadbox">
+        <strong>Select Candidate Resumes</strong>
+        <p class="muted">Multiple PDF / DOC / DOCX files supported</p>
+        <input id="resumeFiles" type="file" name="resumes" accept=".pdf,.doc,.docx" multiple required>
+      </div>
+      <div class="form-actions">
+        <button class="btn red" type="submit">⚡ Screen Candidates</button>
+        <span id="screenMsg" class="msg"></span>
+      </div>
+    </form>
+  </div>
+
+  <div class="results">
+    <div class="kicker">SCREENING RESULTS</div>
+    <div id="resultsBox" class="card"><div class="empty">No screening results yet.</div></div>
+  </div>
+</section>
+
+<section class="section" id="top5">
+  <div class="kicker">STEP 03</div>
+  <h2>Top 5 Candidates</h2>
+  <p class="sub">Highest job-match candidates are ranked automatically.</p>
+  <div id="top5Box" class="card"><div class="empty">Select a job to view Top 5.</div></div>
+</section>
+
+<section class="section alt" id="interviews">
+  <div class="kicker">STEP 04</div>
+  <h2>Interviews</h2>
+  <p class="sub">Shortlist candidates and schedule interviews from the candidate cards.</p>
+  <div id="interviewBox" class="interview-list"><div class="empty">No interviews scheduled.</div></div>
+</section>
+
+<section class="section" id="assistant">
+  <div class="kicker">AI ASSISTANT</div>
+  <h2>Recruiter AI Assistant</h2>
+  <p class="sub">Ask about required skills, top candidates, skill gaps, interviews or company information.</p>
+  <div class="two">
+    <div class="card assistant">
+      <div id="chat" class="chat">
+        <div class="bubble bot">Hi! I can help with job requirements, candidate ranking, skill gaps, interview scheduling and company information.</div>
+      </div>
+      <form id="chatForm" class="chatform">
+        <input id="question" placeholder="e.g. Who is the top candidate?" required>
+        <button class="btn red">Ask</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3>Quick Questions</h3><br>
+      <button class="btn dark" style="width:100%;margin-bottom:10px" onclick="askQuick('What are the required skills?')">Required skills</button>
+      <button class="btn dark" style="width:100%;margin-bottom:10px" onclick="askQuick('Who is the top candidate?')">Top candidate</button>
+      <button class="btn dark" style="width:100%;margin-bottom:10px" onclick="askQuick('What are the missing skills?')">Skill gaps</button>
+      <button class="btn dark" style="width:100%" onclick="askQuick('Tell me about the company')">Company information</button>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div><b style="color:#fff">AI RESUME SCREENING</b><br>AI-powered recruitment workspace</div>
+  <div>© 2026 AI Resume Screening | Recruiter Portal</div>
+</footer>
+
+<div id="interviewModal" class="modal">
+  <div class="modalbox">
+    <button class="close" onclick="closeModal()">×</button>
+    <h2>Schedule Interview</h2><p class="muted" id="modalCandidate"></p><br>
+    <form id="interviewForm">
+      <input type="hidden" id="candidateId">
+      <div class="formgrid">
+        <div class="field"><label>Date *</label><input type="date" id="intDate" required></div>
+        <div class="field"><label>Time *</label><input type="time" id="intTime" required></div>
+        <div class="field"><label>Mode</label><select id="intMode"><option>Online</option><option>Offline</option><option>Hybrid</option></select></div>
+        <div class="field"><label>Meeting Link</label><input id="meetingLink" placeholder="https://..."></div>
+      </div>
+      <div class="form-actions"><button class="btn red">Schedule Interview</button><span id="intMsg" class="msg"></span></div>
+    </form>
+  </div>
+</div>
+
+<script>
+const API = "";
+let jobs = [];
+let selectedJobId = "";
+
+const $ = id => document.getElementById(id);
+
+async function api(url, options={}) {
+  const res = await fetch(API + url, options);
+  const data = await res.json().catch(()=>({success:false,error:"Invalid server response"}));
+  if(!res.ok || data.success === false) throw new Error(data.error || "Request failed");
+  return data;
+}
+
+function showMsg(el, text, ok=true) {
+  el.textContent = text;
+  el.className = "msg " + (ok ? "ok" : "err");
+}
+
+async function loadStats(){
+  try{
+    const d = await api("/api/dashboard-stats");
+    $("statJobs").textContent = d.active_jobs ?? 0;
+    $("statResumes").textContent = d.total_resumes ?? 0;
+    $("statShortlisted").textContent = d.shortlisted ?? 0;
+    $("statInterviews").textContent = d.interviews ?? 0;
+  }catch(e){ console.error(e); }
+}
+
+async function loadJobs(){
+  try{
+    const d = await api("/api/jobs");
+    jobs = d.jobs || [];
+    const select = $("jobSelect");
+    select.innerHTML = '<option value="">-- Select a job --</option>';
+    jobs.forEach(j=>{
+      const o=document.createElement("option");
+      o.value=j.id;
+      o.textContent=j.job_title+" — "+j.company_name;
+      select.appendChild(o);
+    });
+    if(selectedJobId && jobs.some(j=>j.id===selectedJobId)) select.value=selectedJobId;
+    updateJobInfo();
+  }catch(e){
+    $("jobSelect").innerHTML='<option value="">Unable to load jobs</option>';
+  }
+}
+
+function getSelectedJob(){
+  return jobs.find(j=>String(j.id)===String($("jobSelect").value));
+}
+
+function updateJobInfo(){
+  const job=getSelectedJob();
+  selectedJobId=job ? job.id : "";
+  if(!job){
+    $("jobInfo").textContent="Create a job first, then select it here.";
+    $("top5Box").innerHTML='<div class="empty">Select a job to view Top 5.</div>';
+    $("resultsBox").innerHTML='<div class="empty">No screening results yet.</div>';
+    return;
+  }
+  $("jobInfo").innerHTML="<b>"+escapeHtml(job.job_title)+"</b> · "+escapeHtml(job.company_name)+
+    " · "+escapeHtml(job.work_mode)+" · Required skills: "+
+    (job.required_skills||[]).map(s=>'<span class="tag">'+escapeHtml(s)+'</span>').join("");
+  renderResults(job.candidates || []);
+  renderTop5(job);
+  renderInterviews(job);
+}
+
+$("jobSelect").addEventListener("change", updateJobInfo);
+
+$("jobForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const msg=$("jobMsg");
+  try{
+    const skills=$("requiredSkills").value.split(",").map(x=>x.trim()).filter(Boolean);
+    const d=await api("/api/create-job",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        job_title:$("jobTitle").value.trim(),
+        company_name:$("companyName").value.trim(),
+        experience:$("experience").value,
+        work_mode:$("workMode").value,
+        required_skills:skills,
+        job_description:$("jobDescription").value.trim(),
+        location:$("location").value.trim(),
+        education:$("education").value.trim()
+      })
+    });
+    showMsg(msg,"Job created successfully.");
+    $("jobForm").reset();
+    await loadJobs();
+    $("jobSelect").value=d.job.id;
+    updateJobInfo();
+    loadStats();
+    document.getElementById("screening").scrollIntoView({behavior:"smooth"});
+  }catch(err){ showMsg(msg,err.message,false); }
+});
+
+$("screenForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const msg=$("screenMsg");
+  if(!$("jobSelect").value){showMsg(msg,"Please select a job first.",false);return;}
+  const files=$("resumeFiles").files;
+  if(!files.length){showMsg(msg,"Please select at least one resume.",false);return;}
+  const fd=new FormData();
+  fd.append("job_id",$("jobSelect").value);
+  for(const f of files) fd.append("resumes",f);
+  try{
+    showMsg(msg,"Screening candidates...");
+    const d=await api("/api/screen-candidates",{method:"POST",body:fd});
+    showMsg(msg,`Screening completed — ${d.total_candidates} candidate(s) processed.`);
+    await loadJobs();
+    $("jobSelect").value=selectedJobId;
+    updateJobInfo();
+    loadStats();
+    $("resumeFiles").value="";
+    document.getElementById("top5").scrollIntoView({behavior:"smooth"});
+  }catch(err){ showMsg(msg,err.message,false); }
+});
+
+function renderResults(candidates){
+  if(!candidates.length){
+    $("resultsBox").innerHTML='<div class="empty">No valid candidates found for this job yet.</div>';
+    return;
+  }
+
+  $("resultsBox").innerHTML =
+    '<div class="table-wrap"><table><thead><tr>' +
+    '<th>Rank</th><th>Candidate</th><th>Match</th><th>Experience</th>' +
+    '<th>Domain</th><th>Skills</th><th>Status</th><th>Action</th>' +
+    '</tr></thead><tbody>' +
+    candidates.map((c,i)=>`<tr>
+      <td>#${i+1}</td>
+      <td><b>${escapeHtml(c.name||"Candidate")}</b><br><span class="muted">${escapeHtml(c.email||"")}</span></td>
+      <td class="score">${Number(c.match_score||0)}%</td>
+      <td>${Number(c.experience||0)} yrs</td>
+      <td>${escapeHtml(c.domain||"General")}</td>
+      <td>${(c.matched_skills||[]).slice(0,3).map(s=>'<span class="tag">'+escapeHtml(s)+'</span>').join("") || '<span class="muted">None</span>'}</td>
+      <td><span class="status">${escapeHtml(c.status||"Screened")}</span></td>
+      <td>
+        <button class="btn dark" onclick="shortlist('${escapeAttr(c.candidate_id)}')">Shortlist</button>
+        <button class="btn red" onclick="openInterview('${escapeAttr(c.candidate_id)}')">Interview</button>
+      </td>
+    </tr>`).join("") +
+    "</tbody></table></div>";
+}
+
+function renderTop5(job){
+  const c=[...(job.candidates||[])]
+    .sort((a,b)=>(Number(b.match_score)||0)-(Number(a.match_score)||0))
+    .slice(0,5);
+
+  if(!c.length){
+    $("top5Box").innerHTML='<div class="empty">No screened candidates yet.</div>';
+    return;
+  }
+
+  $("top5Box").innerHTML=c.map((x,i)=>{
+    const score = Number(x.match_score||0);
+    const matched = x.matched_skills || [];
+    const missing = x.missing_skills || [];
+    const totalSkills = matched.length + missing.length;
+    const skillPct = totalSkills ? Math.round((matched.length / totalSkills) * 100) : score;
+
+    const experience = Number(x.experience||0);
+    const education = Array.isArray(x.education)
+      ? x.education.join(", ")
+      : (x.education || "Not detected");
+
+    let gapSummary = "No major skill gap detected from the available requirements.";
+    if(missing.length){
+      gapSummary = `${missing.length} required skill${missing.length===1?" is":"s are"} missing: ${missing.join(", ")}.`;
+    }
+
+    let recommendation = "Review candidate profile and resume before making the final decision.";
+    if(score >= 85 && missing.length <= 1){
+      recommendation = "Strong match. Recommended for interview consideration.";
+    }else if(score >= 70){
+      recommendation = "Good potential. Review the identified skill gaps before interview.";
+    }else{
+      recommendation = "Moderate/low match. Consider candidates with stronger requirement alignment.";
+    }
+
+    return `
+    <div class="candidate-card">
+      <div class="candidate-head">
+        <div>
+          <div class="kicker">RANK #${i+1}</div>
+          <h3>${escapeHtml(x.name||"Candidate")}</h3>
+        </div>
+        <div class="score" style="font-size:30px">${score}%</div>
+      </div>
+
+      <div class="candidate-meta">
+        <span>✉ ${escapeHtml(x.email||"Not detected")}</span>
+        <span>☎ ${escapeHtml(x.phone||"Not detected")}</span>
+        <span>💼 Experience: ${experience} years</span>
+        <span>🎯 Domain: ${escapeHtml(x.domain||"General")}</span>
+        <span>🎓 Education: ${escapeHtml(education)}</span>
+      </div>
+
+      <div class="analysis-grid">
+
+        <div class="analysis-box good">
+          <h4>✓ Matched Skills</h4>
+          <div>
+            ${matched.map(s=>'<span class="tag">'+escapeHtml(s)+'</span>').join("") || '<span class="muted">None detected</span>'}
+          </div>
+        </div>
+
+        <div class="analysis-box warn">
+          <h4>⚠ Missing Skills</h4>
+          <div>
+            ${missing.map(s=>'<span class="tag">'+escapeHtml(s)+'</span>').join("") || '<span class="muted">None</span>'}
+          </div>
+        </div>
+
+        <div class="analysis-box info">
+          <h4>Skill Match</h4>
+          <p>${skillPct}% of the detected job skill requirements are matched.</p>
+          <div class="skill-progress"><span style="width:${Math.min(skillPct,100)}%"></span></div>
+        </div>
+
+        <div class="analysis-box">
+          <h4>Candidate Fit</h4>
+          <p><b>Overall:</b> ${score}%</p>
+          <div class="breakdown">
+            <div class="break-row">Skills <strong>${skillPct}%</strong></div>
+            <div class="break-row">Experience <strong>${experience} yrs</strong></div>
+            <div class="break-row">Education <strong>${escapeHtml(education)}</strong></div>
+            <div class="break-row">Domain <strong>${escapeHtml(x.domain||"General")}</strong></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="gap-summary">
+        <b>🧠 Skill Gap Analysis:</b> ${escapeHtml(gapSummary)}
+      </div>
+
+      <div class="recommendation">
+        <b>💡 Recommendation:</b> ${escapeHtml(recommendation)}
+      </div>
+
+      <div class="form-actions">
+        <button class="btn red" onclick="shortlist('${escapeAttr(x.candidate_id)}')">Shortlist</button>
+        <button class="btn dark" onclick="openInterview('${escapeAttr(x.candidate_id)}')">Schedule Interview</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function renderInterviews(job){
+  const list=job.interviews||[];
+  if(!list.length){$("interviewBox").innerHTML='<div class="empty">No interviews scheduled.</div>';return;}
+  $("interviewBox").innerHTML=list.slice().reverse().map(i=>`<div class="item">
+    <b>${escapeHtml(i.candidate_name||"Candidate")}</b> — ${escapeHtml(i.job_title||"")}
+    <br><span class="muted">${escapeHtml(i.date)} at ${escapeHtml(i.time)} · ${escapeHtml(i.mode)}</span>
+    ${i.meeting_link?'<br><a style="color:#f20d18" href="'+escapeAttr(i.meeting_link)+'" target="_blank">Open meeting link</a>':""}
+  </div>`).join("");
+}
+
+async function shortlist(candidateId){
+  if(!selectedJobId){alert("Select a job first.");return;}
+  try{
+    await api("/api/shortlist",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({job_id:selectedJobId,candidate_id:candidateId})});
+    await loadJobs(); $("jobSelect").value=selectedJobId; updateJobInfo(); loadStats();
+    alert("Candidate shortlisted successfully.");
+  }catch(e){alert(e.message);}
+}
+
+function openInterview(candidateId){
+  const job=getSelectedJob();
+  const c=(job?.candidates||[]).find(x=>String(x.candidate_id)===String(candidateId));
+  if(!c)return;
+  $("candidateId").value=candidateId;
+  $("modalCandidate").textContent=(c.name||"Candidate")+" · "+(c.email||"");
+  $("intDate").value="";
+  $("intTime").value="";
+  $("meetingLink").value="";
+  $("intMsg").className="msg";
+  $("interviewModal").classList.add("show");
+}
+
+function closeModal(){$("interviewModal").classList.remove("show");}
+
+$("interviewForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  try{
+    const d=await api("/api/schedule-interview",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+      job_id:selectedJobId,candidate_id:$("candidateId").value,date:$("intDate").value,time:$("intTime").value,
+      mode:$("intMode").value,meeting_link:$("meetingLink").value.trim()
+    })});
+    showMsg($("intMsg"),"Interview scheduled successfully.");
+    await loadJobs();$("jobSelect").value=selectedJobId;updateJobInfo();loadStats();
+    setTimeout(closeModal,700);
+  }catch(err){showMsg($("intMsg"),err.message,false);}
+});
+
+$("chatForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const q=$("question").value.trim(); if(!q)return;
+  addBubble(q,"user");$("question").value="";
+  try{
+    const d=await api("/api/assistant",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({question:q,job_id:selectedJobId||null})});
+    addBubble(d.answer||"No answer returned.","bot");
+  }catch(err){addBubble("Sorry, I couldn't process that request: "+err.message,"bot");}
+});
+
+function askQuick(q){$("question").value=q;$("chatForm").requestSubmit();}
+
+function addBubble(text,type){
+  const b=document.createElement("div");b.className="bubble "+type;b.textContent=text;$("chat").appendChild(b);$("chat").scrollTop=$("chat").scrollHeight;
+}
+
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function escapeAttr(v){return escapeHtml(v).replace(/`/g,"&#096;");}
+
+window.addEventListener("click",e=>{if(e.target===$("interviewModal"))closeModal();});
+
+loadStats();
+loadJobs();
+</script>
+</body>
+</html>
