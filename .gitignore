@@ -1,9 +1,29 @@
-uploads/
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Environment / secrets
+.env
+.env.*
+
+# Uploaded resumes - PRIVATE
+candidate_uploads/
+Uploads/
+
+# Generated reports
+generated_reports/
 reports/
 resume_report.pdf
-*.pdf
-__pycache__/
-*.pyc
-.env
-reports/**
-uploads/**
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
