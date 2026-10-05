@@ -1,0 +1,6 @@
+Flask
+flask-cors
+PyMuPDF
+python-docx
+reportlab
+gunicorn
